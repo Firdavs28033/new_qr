@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}{{item.name}}{% endblock title %}
+
+{% block content %}
+<h2>{{item.id}}</h2>
+<h2>{{item.name}}</h2>
+<h2>{{item.text}}</h2>
+
+
+{% comment %} Rasm yuborish {% endcomment %}
+{% if item.image %}
+<img src="{{ item.image.url }}">
+{% else %}
+<h2>Rasm yo'q</h2>
+{% endif %}
+
+{% comment %} QRCODE yuborish {% endcomment %}
+{% if qrcode %}
+<img src="{{ qrcode }}">
+{% else %}
+<h2>QRCODE yo'q</h2>
+{% endif %}
+
+{% comment %} Video yuborish {% endcomment %}
+{% if item.video %}
+<video width="320" height="240" controls>
+    <source src="{{ item.video.url }}" type="video/mp4">
+    
+</video>
+{% else %}
+<h2>Video yo'q</h2>
+{% endif %}
+
+{% comment %} Audio yuborish {% endcomment %}
+{% if item.audio %}
+<audio controls>
+    <source src="{{ item.audio.url }}" type="audio/mp3">
+   
+</audio>
+{% else %}
+<h2>Audio yo'q</h2>
+{% endif %}
+
+
+<a href="{% url 'items_update' item.pk %}"> Tahrirlash </a>
+<a href="{% url 'items_delete' item.pk %}"> O'chirish </a>
+<a href="{% url 'items_create' item.pk %}"> Yaratish </a>
+
+{% endblock content %}
+
