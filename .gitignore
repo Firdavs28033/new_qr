@@ -1,7 +1,0 @@
-#video, audio, rasm
-*.mp4
-*.mp3
-*.ogg
-*.jpg
-*.png;+x-directory
-

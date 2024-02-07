@@ -1,12 +1,13 @@
-from django.shortcuts import render
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
 from .models import Items
 import segno
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
-
-
+from django.views.decorators.csrf import csrf_protect
+from django.http import HttpResponse
+from django.conf import settings
+import os
 
 class ItemsListView(ListView):
     model = Items
@@ -37,23 +38,33 @@ class ItemsCreateView(LoginRequiredMixin, CreateView):
     context_object_name = 'item_create'
     fields = ['name', 'text', 'created_time', 'brand', 'audio','video', 'image', 'teacher']
 
-
-
-
+@csrf_protect
 def items_detail(request, pk):
     item = get_object_or_404(Items, pk=pk)
 
-    qrcode = segno.make_qr(f"127.0.0.1:8000/{pk}")
-    print(qrcode)
-    qrcode.save(
-        f"media/qr_codes/{pk}.png",
-        scale=5,
-        dark="darkblue",
-    )
+    # Generate QR code
+    qrcode = segno.make_qr(f"192.168.15.30:8000/{pk}")
+    
+    # Save QR code to file
+    qrcode_path = os.path.join(settings.MEDIA_ROOT, 'qr_codes', f'{pk}.png')
+    qrcode.save(qrcode_path, scale=5, dark="darkblue")
+
+ 
+    # Get QR code data URI for display
     qr_code_svg = qrcode.svg_data_uri(scale=5)
-    print(qr_code_svg)
+
     context = {
-        "item" : item,
-        "qrcode" : qr_code_svg,
+        "item": item,
+        "qrcode": qr_code_svg,
     }
-    return render(request, 'detail.html',context)
+    return render(request, 'detail.html', context)
+
+def download_qr_code(request, pk):
+    # Get path to the QR code file
+    qrcode_path = os.path.join(settings.MEDIA_ROOT, 'qr_codes', f'{pk}.png')
+
+    # Open the file
+    with open(qrcode_path, 'rb') as f:
+        response = HttpResponse(f.read(), content_type='image/png')
+        response['Content-Disposition'] = f'attachment; filename="{pk}.png"'
+        return response

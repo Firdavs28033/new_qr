@@ -1,34 +1,9 @@
 {% extends "base.html" %}
 {% load static %}
-<link rel="stylesheet" href="{% static "css/style" %}">
-<body>
-    <h1>KRIMINALISTIKA</h1>
-    <div class="button-container">
-        <button class="button1">O'zbekcha</button>
-        <button class="button2">Inglizcha</button>
-      </div>
-    <div class="background-wrapper"></div>
-    <div class="centered-div2">
-        <div class="left-div"><div class="it"><img src="{% static 'images/item.png' %}" alt="Descriptive image text" width="200" height="300" /></div></div>
-        <div class="right-div">
-            <div class="text">
-            <h3>“Levenhuk” mikroskopi</h3>
-            <h4>“Levenhuk” mikroskopi - bular sevimli mashg'ulotlari, maktab biologiyasi, amaliy ishlar va professional laboratoriya tadqiqotlari uchun yuqori sifatli optik asboblardir. Shuningdek, kompaniya mikromir bilan birinchi tanishish uchun bolalar modellarini ishlab chiqaradi. Bu erda siz har qanday vazifa uchun optik va raqamli mikroskoplarning katta tanlovini topasiz. Barcha Levenhuk mikroskoplari laboratoriya jihozlarining zamonaviy talablariga muvofiq ishlab chiqariladi.
-            </h4>
-            </div> 
-            <div class="button4"><button>Video Play</button></div>
-        </div>
-        <button class="button3"> QR Kodni yuklang!</button>
-        <h2>"Livenhuk" mikroskopi</h2>
-        <div class="QR"><img src="QR-tme.jpg" alt="Descriptive image text" width="100" height="100" />
-        </div>
-    </div>
-    <div class="logo"><img src="{% static "images/akad1" %}%}" width="90px" height="90px" /></div>
-    <h5>Ichki ishlar vazirligi Akademiyasi </h5>
-</body>
-{% block title %}{{item.name}}{% endblock title %}
 
 {% block content %}
+
+
 <h2>{{item.id}}</h2>
 <h2>{{item.name}}</h2>
 <h2>{{item.text}}</h2>
@@ -36,11 +11,11 @@
 
 {% comment %} Rasm yuborish {% endcomment %}
 {% if item.image %}
-<img src="{{ item.image.url }}">
+<img src="{{ item.image.url }}" weight=200px, height=200px>
 {% else %}
 <h2>Rasm yo'q</h2>
 {% endif %}
-
+<a href="{% url 'download_qr_code' pk=item.pk %}">Download QR Code</a>
 {% comment %} QRCODE yuborish {% endcomment %}
 {% if qrcode %}
 <img src="{{ qrcode }}">
