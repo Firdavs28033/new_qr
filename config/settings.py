@@ -11,9 +11,6 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
-# from environs import Env 
-# env = Env() # Environment
-# env.read_env() # Read.env file
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,7 +24,7 @@ SECRET_KEY = 'django-insecure-06&3q@-9-!53+@f8e)gm!kse@p#r8i$z@2#wh6f6lr(^x+b%6i
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["localhost", "127.0.0.1", "192.168.15.30"]
 
@@ -87,19 +84,11 @@ DATABASES = {
         'NAME': 'akadmvd',
         'USER': 'postgres',
         'PASSWORD': '12345678',
-        'HOST': '127.0.0.1',    # Or your PostgreSQL host
+        'HOST': '127.0.0.1',   
         'PORT': '5432',     
-                        # Or your PostgreSQL port
+                    
     }
 }
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators

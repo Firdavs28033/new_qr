@@ -43,7 +43,7 @@ def items_detail(request, pk):
     item = get_object_or_404(Items, pk=pk)
 
     # Generate QR code
-    qrcode = segno.make_qr(f"192.168.15.30:8000/{pk}")
+    qrcode = segno.make_qr(f"https://qr.akadmvd.uz/{pk}")
     
     # Save QR code to file
     qrcode_path = os.path.join(settings.MEDIA_ROOT, 'qr_codes', f'{pk}.png')
